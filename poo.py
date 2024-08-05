@@ -2,14 +2,14 @@ from colorama import Fore, Style
 import random
 
 class Game:
-    def __init__(self): 
+    def __init__(self):
         self.secuencia = []
         self.intentoDeSecuencia = []
-        self.azul = Fore.BLUE + "O" + Fore.RESET
-        self.amarillo = Fore.YELLOW + "O" + Fore.RESET
-        self.verde = Fore.GREEN + "O" + Fore.RESET
-        self.rojo = Fore.RED + "O" + Fore.RESET
-        
+        self.azul = Fore.BLUE + " 🔵 " + Fore.RESET
+        self.amarillo = Fore.YELLOW + " 🟡 " + Fore.RESET
+        self.verde = Fore.GREEN + " 🟢 " + Fore.RESET
+        self.rojo = Fore.RED + " 🔴 " + Fore.RESET
+
     def bienvenida(self):
         print(Fore.GREEN + "Bienvenido usuario, ¿listo para jugar?" + Fore.RESET)
         veri = input("S/N: ").lower()
@@ -42,41 +42,52 @@ class Game:
             if color == "B":
                 numColo += 1
                 self.secuencia.append(self.azul)
-                print(' '.join(self.secuencia))
+                print("┃ " + ' '.join(self.secuencia) + " ┃" + "  secuencia creada")
+                print("")
             elif color == "G":
                 numColo += 1
                 self.secuencia.append(self.verde)
-                print(' '.join(self.secuencia))
+                print("┃ " + ' '.join(self.secuencia) + " ┃" + "  secuencia creada")
+                print("")
             elif color == "Y":
-                numColo+= 1
-                self.secuencia.append(self.amarillo )
-                print(' '.join(self.secuencia))
+                numColo += 1
+                self.secuencia.append(self.amarillo)
+                print("┃ " + ' '.join(self.secuencia) + " ┃" + "  secuencia creada")
+                print("")
             elif color == "R":
                 numColo += 1
                 self.secuencia.append(self.rojo)
-                print(' '.join(self.secuencia))
+                print("┃ " + ' '.join(self.secuencia) + " ┃" + "  secuencia creada")
+                print("")
+                print("")
 
     def crearCompu(self):
-        colores = [self.azul, self.amarillo , self.verde, self.rojo]
+        colores = [self.azul, self.amarillo, self.verde, self.rojo]
         self.secuencia = random.choices(colores, k=4)
         print(Fore.GREEN + "¡Secuencia creada por la computadora!" + Fore.RESET)
         print(' '.join(self.secuencia))
 
     def adivinaJugador(self):
-        
         print("El jugador crea una secuencia.")
         self.crearCompu()
         intentos = 0
         while intentos < 12:
             intento = input("Ingresa tu secuencia de colores: ").upper().split()
             intentoDeSecuencia = [self.azul if color == "B" else self.amarillo if color == "Y" else self.verde if color == "G" else self.rojo for color in intento]
-            aciertos_posicion = sum(1 for i in range(4) if intentoDeSecuencia[i] == self.secuencia[i])
-            aciertos_color = sum(min(intentoDeSecuencia.count(color), self.secuencia.count(color)) for color in [self.azul, self.amarillo, self.verde, self.rojo]) - aciertos_posicion
+            verificadorDeColres = []
+            for i in range(4):
+                if intentoDeSecuencia[i] == self.secuencia[i]:
+                    verificadorDeColres.append(Fore.GREEN + " 🟢 " + Fore.RESET)  
+                elif intentoDeSecuencia[i] in self.secuencia:
+                    verificadorDeColres.append(Fore.YELLOW + " 🟡 " + Fore.RESET) 
+                else:
+                    verificadorDeColres.append(Fore.RED + " 🔴 " + Fore.RESET)  
+            print("Secuencia ingresada: " + ' '.join(intentoDeSecuencia))
+            print("")
+            print("verificador: " + ' '.join(verificadorDeColres))
             if intentoDeSecuencia == self.secuencia:
                 print(Fore.GREEN + "¡Adivinaste la secuencia!" + Fore.RESET)
                 break
-            else:
-                print(Fore.RED + f"Secuencia incorrecta. Tienes {aciertos_posicion} colores en la posición correcta y {aciertos_color} colores correctos en la posición incorrecta. Inténtalo de nuevo." + Fore.RESET)
             intentos += 1
         if intentos == 12:
             print(Fore.RED + "Se acabaron los intentos. La secuencia era: " + ' '.join(self.secuencia) + Fore.RESET)
@@ -88,7 +99,8 @@ class Game:
         intentos = 0
         while intentos < 12:
             h = random.choices(colores, k=4)
-            print("La computadora intenta: " + ' '.join(h))
+            print("┃ " + ' '.join(h) + " ┃")
+            print("┃                     ┃")
             if h == self.secuencia:
                 print(Fore.GREEN + "¡La computadora adivinó la secuencia!" + Fore.RESET)
                 break
@@ -98,8 +110,7 @@ class Game:
 
 def main():
     juego = Game()
-    juego.bienvenida()
+    # juego.bienvenida()
     juego.elegirModo()
-
 
 main()
