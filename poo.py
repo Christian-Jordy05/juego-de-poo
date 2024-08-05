@@ -84,6 +84,17 @@ class Game:
     def adivinaComputadora(self):
         print("El jugador crea una secuencia.")
         self.crearJugador()
+        colores = [self.azul, self.amarillo, self.verde, self.rojo]
+        intentos = 0
+        while intentos < 12:
+            h = random.choices(colores, k=4)
+            print("La computadora intenta: " + ' '.join(h))
+            if h == self.secuencia:
+                print(Fore.GREEN + "¡La computadora adivinó la secuencia!" + Fore.RESET)
+                break
+            intentos += 1
+        if intentos == 12:
+            print(Fore.RED + "La computadora no pudo adivinar la secuencia." + Fore.RESET)
 
 def main():
     juego = Game()
