@@ -58,12 +58,28 @@ class Game:
 
     def crearCompu(self):
         colores = [self.azul, self.amarillo , self.verde, self.rojo]
- 
+        self.secuencia = random.choices(colores, k=4)
+        print(Fore.GREEN + "¡Secuencia creada por la computadora!" + Fore.RESET)
+        print(' '.join(self.secuencia))
 
     def adivinaJugador(self):
         
         print("El jugador crea una secuencia.")
         self.crearCompu()
+        intentos = 0
+        while intentos < 12:
+            intento = input("Ingresa tu secuencia de colores: ").upper().split()
+            intentoDeSecuencia = [self.azul if color == "B" else self.amarillo if color == "Y" else self.verde if color == "G" else self.rojo for color in intento]
+            aciertos_posicion = sum(1 for i in range(4) if intentoDeSecuencia[i] == self.secuencia[i])
+            aciertos_color = sum(min(intentoDeSecuencia.count(color), self.secuencia.count(color)) for color in [self.azul, self.amarillo, self.verde, self.rojo]) - aciertos_posicion
+            if intentoDeSecuencia == self.secuencia:
+                print(Fore.GREEN + "¡Adivinaste la secuencia!" + Fore.RESET)
+                break
+            else:
+                print(Fore.RED + f"Secuencia incorrecta. Tienes {aciertos_posicion} colores en la posición correcta y {aciertos_color} colores correctos en la posición incorrecta. Inténtalo de nuevo." + Fore.RESET)
+            intentos += 1
+        if intentos == 12:
+            print(Fore.RED + "Se acabaron los intentos. La secuencia era: " + ' '.join(self.secuencia) + Fore.RESET)
 
     def adivinaComputadora(self):
         print("El jugador crea una secuencia.")
