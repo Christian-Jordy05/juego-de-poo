@@ -1,10 +1,15 @@
-from colorama import Fore
+from colorama import Fore, Style
 import random
+
 class Game:
-    def _init_(self): 
+    def __init__(self): 
         self.secuencia = []
         self.intentoDeSecuencia = []
-
+        self.azul = Fore.BLUE + "O" + Fore.RESET
+        self.amarillo = Fore.YELLOW + "O" + Fore.RESET
+        self.verde = Fore.GREEN + "O" + Fore.RESET
+        self.rojo = Fore.RED + "O" + Fore.RESET
+        
     def bienvenida(self):
         print(Fore.GREEN + "Bienvenido usuario, ¿listo para jugar?" + Fore.RESET)
         veri = input("S/N: ").lower()
@@ -24,35 +29,50 @@ class Game:
                 print("Por favor, agrega una respuesta correcta.")
             else:
                 if respuesta == 'adivinar':
-                    self.adivinaComputadora()
-                elif respuesta == 'crear':
                     self.adivinaJugador()
+                elif respuesta == 'crear':
+                    self.adivinaComputadora()
                 break
 
     def crearJugador(self):
-        colores = ['verde', 'azul', 'amarillo', 'rojo']
+        numColo = 0
+        while numColo < 4:
+            print(Fore.GREEN + "Colores: " + Fore.BLUE + "azul = B, " + Fore.YELLOW + "amarillo = Y, " + Fore.RED + "rojo = R, " + Fore.GREEN + "verde = G" + Fore.RESET)
+            color = input("Ingresa el orden de los colores: ").upper()
+            if color == "B":
+                numColo += 1
+                self.secuencia.append(self.azul)
+                print(' '.join(self.secuencia))
+            elif color == "G":
+                numColo += 1
+                self.secuencia.append(self.verde)
+                print(' '.join(self.secuencia))
+            elif color == "Y":
+                numColo+= 1
+                self.secuencia.append(self.amarillo )
+                print(' '.join(self.secuencia))
+            elif color == "R":
+                numColo += 1
+                self.secuencia.append(self.rojo)
+                print(' '.join(self.secuencia))
 
     def crearCompu(self):
-        azul = Fore.BLUE + "O" 
-        amarillo = Fore.YELLOW + "O" 
-        verde = Fore.GREEN + "O" 
-        rojo = Fore.RED + "O" 
-        colores = [azul, amarillo, verde, rojo]
-        self.secuencia = random.choices(colores, k=4)
-        print(Fore.GREEN + "¡Secuencia creada por la computadora!" + Fore.RESET)
-        print(' '.join(self.secuencia))
+        colores = [self.azul, self.amarillo , self.verde, self.rojo]
+ 
 
     def adivinaJugador(self):
+        
         print("El jugador crea una secuencia.")
-        self.crearJugador()
+        self.crearCompu()
 
     def adivinaComputadora(self):
-        print("La computadora crea una secuencia.")
-        self.crearCompu()
+        print("El jugador crea una secuencia.")
+        self.crearJugador()
 
 def main():
     juego = Game()
     juego.bienvenida()
     juego.elegirModo()
+
 
 main()
