@@ -58,7 +58,9 @@ class Game:
 
     def crearCompu(self):
         colores = [self.azul, self.amarillo , self.verde, self.rojo]
- 
+        self.secuencia = random.choices(colores, k=4)
+        print(Fore.GREEN + "¡Secuencia creada por la computadora!" + Fore.RESET)
+        print(' '.join(self.secuencia))
 
     def adivinaJugador(self):
         
