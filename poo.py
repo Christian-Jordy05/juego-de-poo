@@ -72,6 +72,7 @@ class Game:
         self.crearCompu()
         intentos = 0
         while intentos < 12:
+            print(Fore.GREEN + "Colores: " + Fore.BLUE + "azul = B, " + Fore.YELLOW + "amarillo = Y, " + Fore.RED + "rojo = R, " + Fore.GREEN + "verde = G" + Fore.RESET)
             intento = input("Ingresa tu secuencia de colores: ").upper().split()
             intentoDeSecuencia = [self.azul if color == "B" else self.amarillo if color == "Y" else self.verde if color == "G" else self.rojo for color in intento]
             verificadorDeColres = []
@@ -89,7 +90,7 @@ class Game:
                 print(Fore.GREEN + "¡Adivinaste la secuencia!" + Fore.RESET)
                 break
             intentos += 1
-        if intentos == 12:
+        if intentos == 200:
             print(Fore.RED + "Se acabaron los intentos. La secuencia era: " + ' '.join(self.secuencia) + Fore.RESET)
 
     def adivinaComputadora(self):
@@ -98,10 +99,10 @@ class Game:
         colores = [self.azul, self.amarillo, self.verde, self.rojo]
         intentos = 0
         while intentos < 12:
-            h = random.choices(colores, k=4)
-            print("┃ " + ' '.join(h) + " ┃")
+            decisionDeLaCompu = random.choices(colores, k=4)
+            print("┃ " + ' '.join(decisionDeLaCompu) + " ┃")
             print("┃                     ┃")
-            if h == self.secuencia:
+            if decisionDeLaCompu == self.secuencia:
                 print(Fore.GREEN + "¡La computadora adivinó la secuencia!" + Fore.RESET)
                 break
             intentos += 1
@@ -114,3 +115,5 @@ def main():
     juego.elegirModo()
 
 main()
+
+
